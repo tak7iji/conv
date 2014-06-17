@@ -1,0 +1,8 @@
+No,チャプター名,カテゴリ名,親カテゴリ名,ナレッジタイトル（ノウハウ名）,ナレッジ概要,チェックアイテム名,検索手順,検索実施,移植要因,難易度,難易度詳細,目視確認,ヒアリング確認,検索対象ファイル,検索キーワード１,検索キーワード２,検索モジュール,ライン数算出,非算出理由,不明/TODO,ライン数,ライン数根拠,調査内容
+1,chap1,cat1,"",knowledge3,detail,item3,java source,true,Java バージョンアップによる変更,High,高,check,check,*,\*,"","",false,不明,,1,"",""
+2,chap1,cat1,"",knowledge2,<ns2:para>detail</ns2:para>,,,,,,,,,,,,,,,,,,
+3,"",cat2,cat1,knowledge1,<ns2:para>detail</ns2:para>,item1,java source,false,Java バージョンアップによる変更,High,高,check,check,*.java,java\.lang\.SecurityManager,checkTopLevelWindow,"",true,"",,1,"",""
+4,"",cat2,cat1,knowledge1,"",item2,java source,true,Java バージョンアップによる変更,High,高,check,check,*,\*,"",ext_search_xml_xpath.py,true,"",TODO:SE 手動算出,,頑張る,べたサーチ
+5,"",cat3,cat2,knowledge4,<ns2:para>detail</ns2:para>,,,,,,,,,,,,,,,,,,
+6,"",cat5,cat3,,,,,,,,,,,,,,,,,,,,
+7,chap2,cat4,"",,,,,,,,,,,,,,,,,,,,
