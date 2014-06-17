@@ -42,7 +42,6 @@ module Conv
     end
 
     def initialize argv
-      @idx=0
       @argv = argv
     end
 
@@ -87,7 +86,7 @@ module Conv
     def getEntryCategory out, root, node
       cat_id = node.text
       chap_name = root.xpath("//xmlns:ChapterList/xmlns:Chapter/xmlns:ChapterName[following-sibling::xmlns:ChildChapter/xmlns:ChapterCategoryRefKey/text()='#{cat_id}']").text
-
+      chap_no = root.xpath("//xmlns:ChildChapter/xmlns:ChildCapterNo[following-sibling::xmlns:ChapterCategoryRefKey/text()='#{cat_id}']").text
 
       cat = root.xpath("//xmlns:CategoryList/xmlns:Category[@categoryId='#{cat_id}']")
       cat_name = cat.xpath('xmlns:CategoryName/text()').text
@@ -95,15 +94,14 @@ module Conv
       par_cat_id = root.xpath("//xmlns:EntryCategoryRefKey[following-sibling::xmlns:ChildEntry/xmlns:EntryCategoryRefKey/text()='#{cat_id}']").text
       par_name = root.xpath("//xmlns:CategoryList/xmlns:Category[@categoryId='#{par_cat_id}']/xmlns:CategoryName/text()").text
 
-      cat.xpath('xmlns:KnowhowRefKey').tap{|s| out << [@idx+=1, chap_name, cat_name, par_name] if s.empty?}.each do |know_how_ref|
+      cat.xpath('xmlns:KnowhowRefKey').tap{|s| out << [chap_no, chap_name, cat_name, par_name] if s.empty?}.each do |know_how_ref|
         know_how = root.xpath("//xmlns:KnowhowList/xmlns:KnowhowInfomation[@knowhowId='#{know_how_ref.text}']")
         know_how_name = know_how.xpath('xmlns:KnowhowName').text
         know_how_detail_ref = know_how.attribute('knowhowDetailRefKey') if ! know_how.empty?
         know_how_detail = root.xpath("//xmlns:DocBook[@articleId='#{know_how_detail_ref}']/ns2:article/ns2:section/node()").to_ary.map{|e| e.to_xml.strip}.join
 
-        row = CSV::Row.new(HEADERS, ["", chap_name, cat_name, par_name, know_how_name])
-        know_how.xpath('xmlns:CheckItem').tap{|s| out << [@idx+=1, chap_name, cat_name, par_name, know_how_name, know_how_detail] if s.empty?}.each do |item|
-          row[NO] = @idx+=1
+        row = CSV::Row.new(HEADERS, [chap_no, chap_name, cat_name, par_name, know_how_name])
+        know_how.xpath('xmlns:CheckItem').tap{|s| out << [chap_no, chap_name, cat_name, par_name, know_how_name, know_how_detail] if s.empty?}.each do |item|
           out << getCheckItem(item, root, row, know_how_detail).to_hash.values
         end
 
