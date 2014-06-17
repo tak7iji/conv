@@ -1,6 +1,6 @@
 # Conv
 
-TODO: Write a gem description
+TUBAME Knowledge XML <=> CSV, XLSX converter tool.
 
 ## Installation
 
