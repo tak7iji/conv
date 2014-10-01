@@ -13,7 +13,7 @@ module Conv
     def initialize argv
       @argv = argv
       @ext_name = File.extname(argv[:f])
-      @base_name = File.basename(argv[:f], @ext_name)
+      @base_name = File.basename(argv[:f], @ext_name).encode(Encoding::UTF_8)
     end
 
     # ユーティリティメソッド定義
