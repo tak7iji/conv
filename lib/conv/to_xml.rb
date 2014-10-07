@@ -217,7 +217,7 @@ module Conv
         cat_ref = createCategory(:id => cat_id+=1, :name => cat_name) if @root.xpath("//CategoryName[text()='#{cat_name}']").empty?
   
         # DocBookList作成
-        detail = (!exist?(knowledge_detail) && !knowledge_detail.strip.start_with?("<")) ? knowledge_detail.split(/\n/).map{|e| "<ns2:para>#{e}</ns2:para>"}.join("\n") : knowledge_detail
+        detail = (!exist?(knowledge_detail) && !knowledge_detail.strip.start_with?("<")) ? knowledge_detail.split(/\n/).map{|e| "<ns2:para>#{CGI::escape_html(e)}</ns2:para>"}.join("\n") : knowledge_detail
         createDocBook(:id => book_id+=1, :title => knowledge_title, :detail => detail||'') if @root.xpath("//DocBook[descendant::ns2:title/text()='#{knowledge_title}']").empty? && ! exist?(knowledge_title)
 
         # KnowhowRef登録
