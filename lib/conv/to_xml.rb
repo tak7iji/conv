@@ -176,16 +176,16 @@ module Conv
       addChildChapter chap.parent, child_id, cat_ref
     end
 
-    def registChildChapter path
-      @root.xpath(path).each do |e|
+    def registChildChapter node
+      node.each do |e|
         par_ref = e.parent.xpath('EntryCategoryRefKey').text
         par = @root.xpath("//ChildChapter/ChildCapterNo[following-sibling::ChapterCategoryRefKey/text()='#{par_ref}']")[0]
-        cat_ref = e.xpath('EntryCategoryRefKey').text
-  
+        cat_ref = e.xpath("EntryCategoryRefKey").text
+
         child_id = "#{par.text}#{par.parent.xpath('ChildChapter').length + 1}."
         addChildChapter par.parent, child_id, cat_ref
     
-       registChildChapter "#{path}/ChildEntry"
+       registChildChapter node.xpath("ChildEntry[preceding-sibling::EntryCategoryRefKey/text()='#{cat_ref}']")
       end
     end
 
@@ -276,7 +276,7 @@ module Conv
       addChildEntry cat_list.select{|e| !exist?(e[1])}
   
       # ChildChapter登録（その２）
-      registChildChapter '//EntryViewList/EntryCategory/ChildEntry'
+      registChildChapter @root.xpath('//EntryViewList/EntryCategory/ChildEntry')
   
       # XML出力
       @root.root.add_namespace nil,'http://generated.model.biz.knowhow.tubame/knowhow'
@@ -287,4 +287,3 @@ module Conv
     end
   end
 end
-
