@@ -279,7 +279,9 @@ module Conv
       registChildChapter @root.xpath('//EntryViewList/EntryCategory/ChildEntry')
   
       # XML出力
+      @root.remove_namespaces!
       @root.root.add_namespace nil,'http://generated.model.biz.knowhow.tubame/knowhow'
+      @root.root.add_namespace 'ns2', 'http://docbook.org/ns/docbook'
       FileUtils.mkdir @argv[:o] if ! @argv[:o].nil? && ! File.exists?(@argv[:o])
       output_file = "#{@argv[:o]+'/' if ! @argv[:o].nil? && Dir.exists?(@argv[:o])}#{@base_name}.xml"
 
