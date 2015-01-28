@@ -21,7 +21,7 @@ module Conv
       id = options[:id]
       name = options[:name]
   
-      @root.xpath('//CategoryList')[0].add_child(<<-"EOL")
+      @root.xpath('//xmlns:CategoryList')[0].add_child(<<-"EOL")
       <Category categoryId='category_#{id}' appropriate='true'>
           <CategoryName>#{name}</CategoryName>
       </Category>
@@ -42,7 +42,7 @@ module Conv
       calc = (line[LINE_NUM_APPROPRIATE]||'false').downcase
       contents = line[APPROPRIATE_CONTENTS]||''
   
-      @root.xpath('//SearchInfomationList')[0].add_child(<<-"EOL")
+      @root.xpath('//xmlns:SearchInfomationList')[0].add_child(<<-"EOL")
       <SearchInfomation searchInfoId="#{id}">
           <FileType>#{fileType}</FileType>
           <SearchKey1>#{key1}</SearchKey1>
@@ -65,14 +65,14 @@ module Conv
       title = options[:title]
       detail = options[:detail]
   
-      @root.xpath('//DocBookList')[0].add_child(<<-"EOL")
+      @root.xpath('//xmlns:DocBookList')[0].add_child(<<-"EOL")
       <DocBook articleId="knowhowDetail_#{id}">
-          <ns2:article>
-              <ns2:info>
-                  <ns2:title>#{title}</ns2:title>
-              </ns2:info>
-              <ns2:section>#{detail}</ns2:section>
-          </ns2:article>
+          <ns3:article>
+              <ns3:info>
+                  <ns3:title>#{title}</ns3:title>
+              </ns3:info>
+              <ns3:section>#{detail}</ns3:section>
+          </ns3:article>
       </DocBook>
       EOL
     end
@@ -90,8 +90,8 @@ module Conv
   
     def addChildEntry list
       list.each do |cat|
-        parCatId = @root.xpath("//Category[CategoryName/text()='#{cat[1]}']").attr('categoryId')
-        ns = @root.xpath("//EntryCategoryRefKey[text()='#{parCatId}']")[0]
+        parCatId = @root.xpath("//xmlns:Category[xmlns:CategoryName/text()='#{cat[1]}']").attr('categoryId')
+        ns = @root.xpath("//xmlns:EntryCategoryRefKey[text()='#{parCatId}']")[0]
         createEntry(ns.parent, :category => 'ChildEntry', :cat_id => cat[0]) if ! ns.nil?
       end
     end
@@ -99,7 +99,7 @@ module Conv
     def registKnowhowRef options
       key  = options[:key]
     
-      @root.xpath("//CategoryName[text()='#{options[:name]}']")[0].after(<<-"EOL")
+      @root.xpath("//xmlns:CategoryName[text()='#{options[:name]}']")[0].after(<<-"EOL")
       <KnowhowRefKey>#{key}</KnowhowRefKey>
       EOL
     end
@@ -109,7 +109,7 @@ module Conv
       key = options[:key]
       name = options[:name]
   
-      @root.xpath('//KnowhowList')[0].add_child(<<-"EOL")
+      @root.xpath('//xmlns:KnowhowList')[0].add_child(<<-"EOL")
       <KnowhowInfomation knowhowId='knowhow_#{id}' knowhowDetailRefKey='#{key}'>
           <KnowhowNo>1</KnowhowNo>
           <KnowhowName>#{name}</KnowhowName>
@@ -128,12 +128,12 @@ module Conv
       vcon = line[VISUAL_CONFIRM]||''
       hcon = line[HEARING_CONFIRM]||''
       ftype = line[FILE_TYPE]
-      item_no = @root.xpath("//KnowhowInfomation[@knowhowDetailRefKey='#{options[:key]}']/CheckItem").length + 1
+      item_no = @root.xpath("//xmlns:KnowhowInfomation[@knowhowDetailRefKey='#{options[:key]}']/xmlns:CheckItem").length + 1
   
-      ref_key = "searchInfo_#{@root.xpath('//SearchInfomation').length+1}" if ! exist?(ftype)
+      ref_key = "searchInfo_#{@root.xpath('//xmlns:SearchInfomation').length+1}" if ! exist?(ftype)
       ref_key_attr = "searchRefKey='#{ref_key}'" if ! exist?(ref_key)
   
-      @root.xpath("//KnowhowInfomation[@knowhowDetailRefKey='#{options[:key]}']")[0].add_child(<<-"EOL")
+      @root.xpath("//xmlns:KnowhowInfomation[@knowhowDetailRefKey='#{options[:key]}']")[0].add_child(<<-"EOL")
       <CheckItem checkItemId='checkItem_#{id}' #{ref_key_attr} searchExistance='#{exist}'>
           <CheckItemNo>#{item_no}</CheckItemNo>
           <CheckItemName>#{name}</CheckItemName>
@@ -164,28 +164,28 @@ module Conv
       name = options[:name]
       cat_ref = options[:cat_ref]
   
-      @root.xpath('//ChapterList')[0].add_child(<<-"EOL") if @root.xpath("//ChapterName[text()='#{name}']").empty?
+      @root.xpath('//xmlns:ChapterList')[0].add_child(<<-"EOL") if @root.xpath("//xmlns:ChapterName[text()='#{name}']").empty?
       <Chapter>
           <ChapterNo>#{id}.</ChapterNo>
           <ChapterName>#{name}</ChapterName>
       </Chapter>
       EOL
   
-      chap = @root.xpath("//Chapter/ChapterNo[following-sibling::ChapterName/text()='#{name}']")[0]
+      chap = @root.xpath("//xmlns:Chapter/xmlns:ChapterNo[following-sibling::xmlns:ChapterName/text()='#{name}']")[0]
       child_id = "#{chap.text}#{chap.parent.xpath('ChildChapter').length + 1}."
       addChildChapter chap.parent, child_id, cat_ref
     end
 
     def registChildChapter node
       node.each do |e|
-        par_ref = e.parent.xpath('EntryCategoryRefKey').text
-        par = @root.xpath("//ChildChapter/ChildCapterNo[following-sibling::ChapterCategoryRefKey/text()='#{par_ref}']")[0]
-        cat_ref = e.xpath("EntryCategoryRefKey").text
+        par_ref = e.parent.xpath('xmlns:EntryCategoryRefKey').text
+        par = @root.xpath("//xmlns:ChildChapter/xmlns:ChildCapterNo[following-sibling::xmlns:ChapterCategoryRefKey/text()='#{par_ref}']")[0]
+        cat_ref = e.xpath("xmlns:EntryCategoryRefKey").text
 
-        child_id = "#{par.text}#{par.parent.xpath('ChildChapter').length + 1}."
+        child_id = "#{par.text}#{par.parent.xpath('xmlns:ChildChapter').length + 1}."
         addChildChapter par.parent, child_id, cat_ref
     
-       registChildChapter node.xpath("ChildEntry[preceding-sibling::EntryCategoryRefKey/text()='#{cat_ref}']")
+       registChildChapter node.xpath("xmlns:ChildEntry[preceding-sibling::xmlns:EntryCategoryRefKey/text()='#{cat_ref}']")
       end
     end
 
@@ -214,24 +214,24 @@ module Conv
         chapter_name = line[CHAPTER_NAME]
   
         # CategoryList作成
-        cat_ref = createCategory(:id => cat_id+=1, :name => cat_name) if @root.xpath("//CategoryName[text()='#{cat_name}']").empty?
+        cat_ref = createCategory(:id => cat_id+=1, :name => cat_name) if @root.xpath("//xmlns:CategoryName[text()='#{cat_name}']").empty?
   
         # DocBookList作成
-        detail = (!exist?(knowledge_detail) && !knowledge_detail.strip.start_with?("<")) ? knowledge_detail.split(/\n/).map{|e| "<ns2:para>#{CGI::escape_html(e)}</ns2:para>"}.join("\n") : knowledge_detail
-        createDocBook(:id => book_id+=1, :title => knowledge_title, :detail => detail||'') if @root.xpath("//DocBook[descendant::ns2:title/text()='#{knowledge_title}']").empty? && ! exist?(knowledge_title)
+        detail = (!exist?(knowledge_detail) && !knowledge_detail.strip.start_with?("<")) ? knowledge_detail.split(/\n/).map{|e| "<ns3:para>#{CGI::escape_html(e)}</ns3:para>"}.join("\n") : knowledge_detail
+        createDocBook(:id => book_id+=1, :title => knowledge_title, :detail => detail||'') if @root.xpath("//xmlns:DocBook[descendant::ns3:title/text()='#{knowledge_title}']").empty? && ! exist?(knowledge_title)
 
         # KnowhowRef登録
-        registKnowhowRef(:name => cat_name, :key => "knowhow_#{book_id}") if @root.xpath("//KnowhowRefKey[text()='knowhow_#{book_id}']").empty? && ! exist?(knowledge_title)
+        registKnowhowRef(:name => cat_name, :key => "knowhow_#{book_id}") if @root.xpath("//xmlns:KnowhowRefKey[text()='knowhow_#{book_id}']").empty? && ! exist?(knowledge_title)
   
         # KnohowList作成
-        articleId = @root.xpath("//DocBook[descendant::ns2:title/text()='#{knowledge_title}']/@articleId")
-        createKnowhowInfo(:id => knowhow_id+=1, :key => articleId, :name => knowledge_title) if @root.xpath("//KnowhowName[text()='#{knowledge_title}']").empty? && ! exist?(knowledge_title) && ! articleId.nil?
+        articleId = @root.xpath("//xmlns:DocBook[descendant::ns3:title/text()='#{knowledge_title}']/@articleId")
+        createKnowhowInfo(:id => knowhow_id+=1, :key => articleId, :name => knowledge_title) if @root.xpath("//xmlns:KnowhowName[text()='#{knowledge_title}']").empty? && ! exist?(knowledge_title) && ! articleId.nil?
 
         # CheckItem登録
         registCheckItem(line, :id => item_id+=1, :key => articleId) if ! exist?(knowledge_title) && ! exist?(check_item_name) && ! articleId.nil?
   
         # Chapter登録（その１）
-        chapter_id+=1 if @root.xpath("//ChapterName[text()='#{chapter_name}']").empty? && ! exist?(chapter_name) && ! cat_ref.nil?
+        chapter_id+=1 if @root.xpath("//xmlns:ChapterName[text()='#{chapter_name}']").empty? && ! exist?(chapter_name) && ! cat_ref.nil?
         createChapter(:id => chapter_id, :name => chapter_name, :cat_ref => cat_ref) if ! exist?(chapter_name) && ! cat_ref.nil?
   
         cat_list << [cat_ref, parent_cat_name] if ! cat_ref.nil?
@@ -239,7 +239,7 @@ module Conv
   
       # XMLビルダー
       builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
-        xml.PortabilityKnowhow('xmlns:ns2' => 'http://docbook.org/ns/docbook') {
+        xml.PortabilityKnowhow('xmlns' => 'http://generated.model.biz.knowhow.tubame/knowhow', 'xmlns:ns2' => 'http://www.w3.org/1999/xlink', 'xmlns:ns3' => 'http://docbook.org/ns/docbook') {
           xml.PortabilityKnowhowTitle @base_name
           xml.EntryViewList
           xml.ChapterList
@@ -266,9 +266,9 @@ module Conv
   
       # EntryViewList作成（その１）
       # トップレベルエントリだけ作成
-      ns = @root.xpath('//EntryViewList')[0]
+      ns = @root.xpath('//xmlns:EntryViewList')[0]
       cat_list.select{|e| exist?(e[1])}.each do |line|
-        createEntry(ns, :category => 'EntryCategory', :cat_id => line[0]) if @root.xpath("//EntryCategoryRefKey[text()='#{line[0]}']").empty?
+        createEntry(ns, :category => 'EntryCategory', :cat_id => line[0]) if @root.xpath("//xmlns:EntryCategoryRefKey[text()='#{line[0]}']").empty?
       end
   
       # EntryViewList作成（その２）
@@ -276,12 +276,9 @@ module Conv
       addChildEntry cat_list.select{|e| !exist?(e[1])}
   
       # ChildChapter登録（その２）
-      registChildChapter @root.xpath('//EntryViewList/EntryCategory/ChildEntry')
+      registChildChapter @root.xpath('//xmlns:EntryViewList/xmlns:EntryCategory/xmlns:ChildEntry')
   
       # XML出力
-      @root.remove_namespaces!
-      @root.root.add_namespace nil,'http://generated.model.biz.knowhow.tubame/knowhow'
-      @root.root.add_namespace 'ns2', 'http://docbook.org/ns/docbook'
       FileUtils.mkdir @argv[:o] if ! @argv[:o].nil? && ! File.exists?(@argv[:o])
       output_file = "#{@argv[:o]+'/' if ! @argv[:o].nil? && Dir.exists?(@argv[:o])}#{@base_name}.xml"
 

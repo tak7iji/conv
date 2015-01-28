@@ -98,7 +98,7 @@ module Conv
         know_how = root.xpath("//xmlns:KnowhowList/xmlns:KnowhowInfomation[@knowhowId='#{know_how_ref.text}']")
         know_how_name = know_how.xpath('xmlns:KnowhowName').text
         know_how_detail_ref = know_how.attribute('knowhowDetailRefKey') if ! know_how.empty?
-        know_how_detail = root.xpath("//xmlns:DocBook[@articleId='#{know_how_detail_ref}']/ns2:article/ns2:section/node()").to_ary.map{|e| e.to_xml.strip}.join
+        know_how_detail = root.xpath("//xmlns:DocBook[@articleId='#{know_how_detail_ref}']/ns3:article/ns3:section/node()").to_ary.map{|e| e.to_xml.strip}.join
 
         row = CSV::Row.new(HEADERS, [chap_no, chap_name, cat_name, par_name, know_how_name])
         know_how.xpath('xmlns:CheckItem').tap{|s| out << [chap_no, chap_name, cat_name, par_name, know_how_name, know_how_detail] if s.empty?}.each do |item|
