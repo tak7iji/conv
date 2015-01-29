@@ -110,7 +110,9 @@ module Conv
 
     def process
       Output.new(@argv).get_output do |out|
-        Nokogiri.XML(open(@argv[:f])).tap{|s| s.xpath("//xmlns:EntryCategoryRefKey").each {|node| getEntryCategory out, s, node}}
+        file = Nokogiri::XML(open(@argv[:f]))
+        file.tap{|s| s.xpath("//xmlns:EntryCategoryRefKey").each {|node| getEntryCategory out, s, node}}
+        out << ["@@" + file.xpath("//xmlns:PortabilityKnowhowTitle").text]
       end
     end
   end
