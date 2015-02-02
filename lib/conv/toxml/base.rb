@@ -7,7 +7,8 @@ require 'roo'
 require 'conv/headers'
 
 module Conv
-  class ToXml
+  module ToXml
+    class Base
     include Conv::Headers
 
     def initialize argv
@@ -295,6 +296,7 @@ module Conv
       output_file = "#{@argv[:o]+'/' if ! @argv[:o].nil? && Dir.exists?(@argv[:o])}#{@base_name}.xml"
 
       File.open(output_file, "w") {|file| file.write(@root.to_xml) }
+    end
     end
   end
 end

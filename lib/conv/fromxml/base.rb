@@ -8,7 +8,8 @@ require 'xlsx_writer'
 require 'conv/headers'
 
 module Conv
-  class FromXml
+  module FromXml
+    class Base
     include Conv::Headers
 
     class Output
@@ -114,6 +115,7 @@ module Conv
         file.tap{|s| s.xpath("//xmlns:EntryCategoryRefKey").each {|node| getEntryCategory out, s, node}}
         out << ["@@" + file.xpath("//xmlns:PortabilityKnowhowTitle").text]
       end
+    end
     end
   end
 end

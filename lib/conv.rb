@@ -1,8 +1,8 @@
 #encoding: utf-8
 
 require "conv/version"
-require "conv/to_xml"
-require "conv/from_xml"
+require "conv/toxml"
+require "conv/fromxml"
 require "optparse"
 
 Version = Conv::VERSION
@@ -23,11 +23,11 @@ module Conv
       when ".xml"
         out = opts[:x] ? 'XLSX' : 'CSV'
         puts "Convert #{opts[:f]} to #{out}."
-        FromXml.new(opts).process
+        FromXml::Base.new(opts).process
         out
       when ".csv", ".xlsx"
         puts "Convert #{opts[:f]} to TUBAME Knowledge XML."
-        ToXml.new(opts).process
+        ToXml::Base.new(opts).process
         "XML"
       else
         puts opt.help if !opt.nil?
