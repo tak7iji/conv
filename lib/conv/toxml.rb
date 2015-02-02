@@ -1,4 +1,3 @@
-require 'toxml/base'
+require 'conv/toxml/base'
 
-module Conv::ToXml
-end
+module Conv::ToXml; end

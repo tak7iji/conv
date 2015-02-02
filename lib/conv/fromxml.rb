@@ -1,4 +1,3 @@
-require 'fromxml/base'
+require 'conv/fromxml/base'
 
-module Conv::FromXml
-end
+module Conv::FromXml; end
