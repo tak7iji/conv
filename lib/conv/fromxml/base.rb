@@ -23,30 +23,30 @@ module Conv::FromXml
     end
 
     def getCheckItem item, root, row, know_how_detail
-      row[CHECK_ITEM_NAME] = item.xpath('xmlns:CheckItemName').text
-      row[SEARCH_PROCESS] = item.xpath('xmlns:SearchProcess').text
-      row[SEARCH_EXIST] = item.attr('searchExistance')
-      row[FACTOR] = item.xpath('xmlns:PortabilityFactor').text
-      row[DEGREE] = item.xpath('xmlns:PortabilityDegree').text
-      row[DEGREE_DETAIL] = item.xpath('xmlns:DegreeDetail').text
-      row[VISUAL_CONFIRM] = item.xpath('xmlns:VisualConfirm').text
-      row[HEARING_CONFIRM] = item.xpath('xmlns:HearingConfirm').text
+      row[Conv::CHECK_ITEM_NAME] = item.xpath('xmlns:CheckItemName').text
+      row[Conv::SEARCH_PROCESS] = item.xpath('xmlns:SearchProcess').text
+      row[Conv::SEARCH_EXIST] = item.attr('searchExistance')
+      row[Conv::FACTOR] = item.xpath('xmlns:PortabilityFactor').text
+      row[Conv::DEGREE] = item.xpath('xmlns:PortabilityDegree').text
+      row[Conv::DEGREE_DETAIL] = item.xpath('xmlns:DegreeDetail').text
+      row[Conv::VISUAL_CONFIRM] = item.xpath('xmlns:VisualConfirm').text
+      row[Conv::HEARING_CONFIRM] = item.xpath('xmlns:HearingConfirm').text
 
-      row[KNOWLEDGE_DETAIL] = item.xpath('xmlns:CheckItemNo').text == '1' ? know_how_detail : ''
+      row[Conv::KNOWLEDGE_DETAIL] = item.xpath('xmlns:CheckItemNo').text == '1' ? know_how_detail : ''
 
       search_info_ary = Array.new
       root.xpath("//xmlns:SearchInfomation[@searchInfoId='#{item.attr('searchRefKey')}']").each do |e|
-        row[FILE_TYPE] = e.xpath('xmlns:FileType').text
-        row[KEYWORD_1] = e.xpath('xmlns:SearchKey1').text
-        row[KEYWORD_2] = e.xpath('xmlns:SearchKey2').text
-        row[MODULE] = e.xpath('xmlns:PythonModule').text
-        row[LINE_NUM_APPROPRIATE] = e.xpath("xmlns:Appropriate").attr('lineNumberAppropriate').text
-        row[APPROPRIATE_CONTENTS] = e.xpath('xmlns:Appropriate/xmlns:AppropriateContents').text
+        row[Conv::FILE_TYPE] = e.xpath('xmlns:FileType').text
+        row[Conv::KEYWORD_1] = e.xpath('xmlns:SearchKey1').text
+        row[Conv::KEYWORD_2] = e.xpath('xmlns:SearchKey2').text
+        row[Conv::MODULE] = e.xpath('xmlns:PythonModule').text
+        row[Conv::LINE_NUM_APPROPRIATE] = e.xpath("xmlns:Appropriate").attr('lineNumberAppropriate').text
+        row[Conv::APPROPRIATE_CONTENTS] = e.xpath('xmlns:Appropriate/xmlns:AppropriateContents').text
         line_no = e.xpath('xmlns:LineNumberInfomation/xmlns:LineNumber').text
-        row[TODO] = line_no if ! integer_string? line_no
-        row[LINE_NUM] = line_no if integer_string? line_no
-        row[LINE_NUM_CONTENTS] = e.xpath('xmlns:LineNumberInfomation/xmlns:LineNumberContents').text
-        row[INVEST] = e.xpath('xmlns:LineNumberInfomation/xmlns:Investigation').text
+        row[Conv::TODO] = line_no if ! integer_string? line_no
+        row[Conv::LINE_NUM] = line_no if integer_string? line_no
+        row[Conv::LINE_NUM_CONTENTS] = e.xpath('xmlns:LineNumberInfomation/xmlns:LineNumberContents').text
+        row[Conv::INVEST] = e.xpath('xmlns:LineNumberInfomation/xmlns:Investigation').text
       end
       row
     end

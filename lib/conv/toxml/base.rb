@@ -9,7 +9,6 @@ require 'conv/headers'
 module Conv
   module ToXml
     class Base
-    include Conv::Headers
 
     def initialize argv
       @argv = argv
@@ -32,16 +31,16 @@ module Conv
 
     def createSearchInfo line, options
       id = options[:id]
-      fileType = line[FILE_TYPE]||''
-      key1 = CGI::escape_html(line[KEYWORD_1]||'')
-      key2 = CGI::escape_html(line[KEYWORD_2]||'')
-      py_mod = line[MODULE]||''
-      todo = line[TODO]
-      line_num = exist?(todo) ? (line[LINE_NUM]||'').to_i : todo
-      reason = line[LINE_NUM_CONTENTS]||''
-      invest = line[INVEST]||''
-      calc = (line[LINE_NUM_APPROPRIATE]||'false').downcase
-      contents = line[APPROPRIATE_CONTENTS]||''
+      fileType = line[Conv::FILE_TYPE]||''
+      key1 = CGI::escape_html(line[Conv::KEYWORD_1]||'')
+      key2 = CGI::escape_html(line[Conv::KEYWORD_2]||'')
+      py_mod = line[Conv::MODULE]||''
+      todo = line[Conv::TODO]
+      line_num = exist?(todo) ? (line[Conv::LINE_NUM]||'').to_i : todo
+      reason = line[Conv::LINE_NUM_CONTENTS]||''
+      invest = line[Conv::INVEST]||''
+      calc = (line[Conv::LINE_NUM_APPROPRIATE]||'false').downcase
+      contents = line[Conv::APPROPRIATE_CONTENTS]||''
   
       @root.xpath('//xmlns:SearchInfomationList')[0].add_child(<<-"EOL")
       <SearchInfomation searchInfoId="#{id}">
@@ -120,15 +119,15 @@ module Conv
   
     def registCheckItem line, options
       id = options[:id]
-      name = line[CHECK_ITEM_NAME]||''
-      process = line[SEARCH_PROCESS]||''
-      exist = (line[SEARCH_EXIST]||'false').downcase
-      factor = line[FACTOR]||''
-      degree = line[DEGREE]||''
-      detail = line[DEGREE_DETAIL]||''
-      vcon = line[VISUAL_CONFIRM]||''
-      hcon = line[HEARING_CONFIRM]||''
-      ftype = line[FILE_TYPE]
+      name = line[Conv::CHECK_ITEM_NAME]||''
+      process = line[Conv::SEARCH_PROCESS]||''
+      exist = (line[Conv::SEARCH_EXIST]||'false').downcase
+      factor = line[Conv::FACTOR]||''
+      degree = line[Conv::DEGREE]||''
+      detail = line[Conv::DEGREE_DETAIL]||''
+      vcon = line[Conv::VISUAL_CONFIRM]||''
+      hcon = line[Conv::HEARING_CONFIRM]||''
+      ftype = line[Conv::FILE_TYPE]
       item_no = @root.xpath("//xmlns:KnowhowInfomation[@knowhowDetailRefKey='#{options[:key]}']/xmlns:CheckItem").length + 1
   
       ref_key = "searchInfo_#{@root.xpath('//xmlns:SearchInfomation').length+1}" if ! exist?(ftype)
@@ -208,7 +207,7 @@ module Conv
       proc = lambda do |line|
 
         metadata = false
-        chapter_no = line[NO]
+        chapter_no = line[Conv::NO]
         if chapter_no[0, 2] == "@@" then
           portability_knowhow_title = chapter_no[2..-1]
           metadata = true
@@ -216,12 +215,12 @@ module Conv
 
         next if chapter_no == NO || metadata
   
-        cat_name = line[CATEGORY_NAME]
-        parent_cat_name = line[PARENT_CATEGORY_NAME]
-        knowledge_detail = line[KNOWLEDGE_DETAIL]
-        knowledge_title = line[KNOWLEDGE_TITLE]
-        check_item_name = line[CHECK_ITEM_NAME]
-        chapter_name = line[CHAPTER_NAME]
+        cat_name = line[Conv::CATEGORY_NAME]
+        parent_cat_name = line[Conv::PARENT_CATEGORY_NAME]
+        knowledge_detail = line[Conv::KNOWLEDGE_DETAIL]
+        knowledge_title = line[Conv::KNOWLEDGE_TITLE]
+        check_item_name = line[Conv::CHECK_ITEM_NAME]
+        chapter_name = line[Conv::CHAPTER_NAME]
   
         # CategoryList作成
         cat_ref = createCategory(:id => cat_id+=1, :name => cat_name) if @root.xpath("//xmlns:CategoryName[text()='#{cat_name}']").empty?
@@ -263,7 +262,7 @@ module Conv
 
       case @ext_name
       when ".csv"
-        CSV.foreach(@argv[:f], {:encoding => 'Shift_JIS:UTF-8', :headers => HEADERS, :return_headers => false}, &proc)
+        CSV.foreach(@argv[:f], {:encoding => 'Shift_JIS:UTF-8', :headers => Conv::HEADERS, :return_headers => false}, &proc)
       when ".xlsx"
         # 第二引数にシート名が指定されている場合は、そのシートから読み込む
         Roo::Excelx.new(@argv[:f]).tap{|s| s.default_sheet=@argv[:s] if !@argv[:s].nil?}.each({:headers => true}, &proc)
