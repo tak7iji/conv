@@ -12,7 +12,7 @@ module Conv::Output
   class ToXlsx < Conv::Output::Base
 
     def initialize argv
-      FileUtils.mkdir argv[:o] if ! argv[:o].nil? && ! File.exists?(argv[:o])
+      super argv
       @output_file = "#{argv[:o]+'/' if ! argv[:o].nil? && Dir.exists?(argv[:o])}#{File.basename(argv[:f], '.xml')}.xlsx"
 
       @doc = XlsxWriter.new

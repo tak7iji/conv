@@ -4,6 +4,10 @@ require 'fileutils'
 
 module Conv::Output
   class Base
+    def initialize argv
+      FileUtils.mkdir argv[:o] if ! argv[:o].nil? && ! File.exists?(argv[:o])
+    end
+    
     def get_output
       yield @out
       @out.close
