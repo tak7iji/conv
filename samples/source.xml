@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<PortabilityKnowhow xmlns:ns3="http://docbook.org/ns/docbook" xmlns="http://generated.model.biz.knowhow.tubame/knowhow">
-  <PortabilityKnowhowTitle>source</PortabilityKnowhowTitle>
+<PortabilityKnowhow xmlns="http://generated.model.biz.knowhow.tubame/knowhow" xmlns:ns2="http://www.w3.org/1999/xlink" xmlns:ns3="http://docbook.org/ns/docbook">
+  <PortabilityKnowhowTitle>サンプルCSV</PortabilityKnowhowTitle>
   <EntryViewList>      <EntryCategory>
           <EntryCategoryRefKey>category_1</EntryCategoryRefKey>
             <ChildEntry>
@@ -8,13 +8,13 @@
             <ChildEntry>
           <EntryCategoryRefKey>category_3</EntryCategoryRefKey>
             <ChildEntry>
-          <EntryCategoryRefKey>category_5</EntryCategoryRefKey>
+          <EntryCategoryRefKey>category_4</EntryCategoryRefKey>
       </ChildEntry>
 </ChildEntry>
 </ChildEntry>
 </EntryCategory>
       <EntryCategory>
-          <EntryCategoryRefKey>category_4</EntryCategoryRefKey>
+          <EntryCategoryRefKey>category_5</EntryCategoryRefKey>
       </EntryCategory>
 </EntryViewList>
   <ChapterList>      <Chapter>
@@ -31,7 +31,7 @@
           <ChapterCategoryRefKey>category_3</ChapterCategoryRefKey>
             <ChildChapter>
           <ChildCapterNo>1.1.1.1.1.</ChildCapterNo>
-          <ChapterCategoryRefKey>category_5</ChapterCategoryRefKey>
+          <ChapterCategoryRefKey>category_4</ChapterCategoryRefKey>
       </ChildChapter>
 </ChildChapter>
 </ChildChapter>
@@ -42,7 +42,7 @@
           <ChapterName>chap2</ChapterName>
             <ChildChapter>
           <ChildCapterNo>2.1.</ChildCapterNo>
-          <ChapterCategoryRefKey>category_4</ChapterCategoryRefKey>
+          <ChapterCategoryRefKey>category_5</ChapterCategoryRefKey>
       </ChildChapter>
 </Chapter>
 </ChapterList>
@@ -60,10 +60,10 @@
 
       </Category>
       <Category categoryId="category_4" appropriate="true">
-          <CategoryName>cat4</CategoryName>
+          <CategoryName>cat5</CategoryName>
       </Category>
       <Category categoryId="category_5" appropriate="true">
-          <CategoryName>cat5</CategoryName>
+          <CategoryName>cat4</CategoryName>
       </Category>
 </CategoryList>
   <KnowhowList>      <KnowhowInfomation knowhowId="knowhow_1" knowhowDetailRefKey="knowhowDetail_1">
@@ -111,24 +111,14 @@
       <KnowhowInfomation knowhowId="knowhow_4" knowhowDetailRefKey="knowhowDetail_4">
           <KnowhowNo>1</KnowhowNo>
           <KnowhowName>knowledge4</KnowhowName>
-            <CheckItem checkItemId="checkItem_4" searchExistance="true">
-          <CheckItemNo>1</CheckItemNo>
-          <CheckItemName>item4</CheckItemName>
-          <SearchProcess>java source</SearchProcess>
-          <PortabilityFactor>Java バージョンアップによる変更</PortabilityFactor>
-          <PortabilityDegree>High</PortabilityDegree>
-          <DegreeDetail>高</DegreeDetail>
-          <VisualConfirm>check</VisualConfirm>
-          <HearingConfirm>check</HearingConfirm>
-      </CheckItem>
-</KnowhowInfomation>
+      </KnowhowInfomation>
 </KnowhowList>
   <DocBookList>      <DocBook articleId="knowhowDetail_1">
           <ns3:article>
               <ns3:info>
                   <ns3:title>knowledge2</ns3:title>
               </ns3:info>
-              <ns3:section><ns3:para>detail</ns3:para></ns3:section>
+              <ns3:section><ns2:para>detail</ns2:para></ns3:section>
           </ns3:article>
       </DocBook>
       <DocBook articleId="knowhowDetail_2">
@@ -144,7 +134,7 @@
               <ns3:info>
                   <ns3:title>knowledge1</ns3:title>
               </ns3:info>
-              <ns3:section><ns3:para>detail</ns3:para></ns3:section>
+              <ns3:section><ns2:para>detail</ns2:para></ns3:section>
           </ns3:article>
       </DocBook>
       <DocBook articleId="knowhowDetail_4">
@@ -152,12 +142,7 @@
               <ns3:info>
                   <ns3:title>knowledge4</ns3:title>
               </ns3:info>
-              <ns3:section><ns3:para>detail</ns3:para>
-                            <ns3:programlisting>
-                shared.loader=${catalina_base}/shared/classes,${catalina_base}/shared/lib/*.jar,
-                ${catalina_home}/shared/classes,${catalina_home}/shared/lib/*.jar
-                </ns3:programlisting>
-</ns3:section>
+              <ns3:section><ns2:para>detail</ns2:para></ns3:section>
           </ns3:article>
       </DocBook>
 </DocBookList>
