@@ -5,7 +5,6 @@ require 'nokogiri'
 require 'csv'
 require 'cgi'
 require 'xlsx_writer'
-require 'conv/headers'
 require 'conv/output'
 
 module Conv::FromXml
@@ -69,7 +68,7 @@ module Conv::FromXml
         know_how_detail_ref = know_how.attribute('knowhowDetailRefKey') if ! know_how.empty?
         know_how_detail = root.xpath("//xmlns:DocBook[@articleId='#{know_how_detail_ref}']/ns3:article/ns3:section/node()").to_ary.map{|e| e.to_xml.strip}.join
 
-        row = CSV::Row.new(HEADERS, [chap_no, chap_name, cat_name, par_name, know_how_name])
+        row = CSV::Row.new(Conv::HEADERS, [chap_no, chap_name, cat_name, par_name, know_how_name])
         know_how.xpath('xmlns:CheckItem').tap{|s| out << [chap_no, chap_name, cat_name, par_name, know_how_name, know_how_detail] if s.empty?}.each do |item|
           out << getCheckItem(item, root, row, know_how_detail).to_hash.values
         end

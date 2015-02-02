@@ -5,9 +5,9 @@ module Conv::Output
   def self.createOutput argv
     case argv[:x]
     when true
-      Case::Output::ToXlsx.new(argv)
+      Conv::Output::ToXlsx.new(argv)
     else
-      Case::Output::ToCsv.new(argv)
+      Conv::Output::ToCsv.new(argv)
     end
   end
 end

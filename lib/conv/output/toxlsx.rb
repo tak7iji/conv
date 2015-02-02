@@ -10,14 +10,13 @@ require 'conv/output/base'
 
 module Conv::Output
   class ToXlsx < Conv::Output::Base
-    include Conv::Headers
 
     def initialize argv
       FileUtils.mkdir argv[:o] if ! argv[:o].nil? && ! File.exists?(argv[:o])
       @output_file = "#{argv[:o]+'/' if ! argv[:o].nil? && Dir.exists?(argv[:o])}#{File.basename(argv[:f], '.xml')}.xlsx"
 
       @doc = XlsxWriter.new
-      @sheet = @doc.add_sheet("Data").tap{|s| s.add_row FromXml::Base::HEADERS }
+      @sheet = @doc.add_sheet("Data").tap{|s| s.add_row Conv::HEADERS }
       @out = self
     end
   end

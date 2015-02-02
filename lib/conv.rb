@@ -8,6 +8,7 @@ require "optparse"
 Version = Conv::VERSION
 
 module Conv
+  include Conv::Headers
   def self.run argv
     opts = {}
     opt = OptionParser.new
