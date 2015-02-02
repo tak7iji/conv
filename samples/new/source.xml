@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PortabilityKnowhow xmlns="http://generated.model.biz.knowhow.tubame/knowhow" xmlns:ns2="http://www.w3.org/1999/xlink" xmlns:ns3="http://docbook.org/ns/docbook">
+  <PortabilityKnowhowTitle>サンプルCSV</PortabilityKnowhowTitle>
+  <EntryViewList>      <EntryCategory>
+          <EntryCategoryRefKey>category_1</EntryCategoryRefKey>
+            <ChildEntry>
+          <EntryCategoryRefKey>category_2</EntryCategoryRefKey>
+            <ChildEntry>
+          <EntryCategoryRefKey>category_3</EntryCategoryRefKey>
+            <ChildEntry>
+          <EntryCategoryRefKey>category_4</EntryCategoryRefKey>
+      </ChildEntry>
+</ChildEntry>
+</ChildEntry>
+</EntryCategory>
+      <EntryCategory>
+          <EntryCategoryRefKey>category_5</EntryCategoryRefKey>
+      </EntryCategory>
+</EntryViewList>
+  <ChapterList>      <Chapter>
+          <ChapterNo>1.</ChapterNo>
+          <ChapterName>chap1</ChapterName>
+            <ChildChapter>
+          <ChildCapterNo>1.1.</ChildCapterNo>
+          <ChapterCategoryRefKey>category_1</ChapterCategoryRefKey>
+            <ChildChapter>
+          <ChildCapterNo>1.1.1.</ChildCapterNo>
+          <ChapterCategoryRefKey>category_2</ChapterCategoryRefKey>
+            <ChildChapter>
+          <ChildCapterNo>1.1.1.1.</ChildCapterNo>
+          <ChapterCategoryRefKey>category_3</ChapterCategoryRefKey>
+            <ChildChapter>
+          <ChildCapterNo>1.1.1.1.1.</ChildCapterNo>
+          <ChapterCategoryRefKey>category_4</ChapterCategoryRefKey>
+      </ChildChapter>
+</ChildChapter>
+</ChildChapter>
+</ChildChapter>
+</Chapter>
+      <Chapter>
+          <ChapterNo>2.</ChapterNo>
+          <ChapterName>chap2</ChapterName>
+            <ChildChapter>
+          <ChildCapterNo>2.1.</ChildCapterNo>
+          <ChapterCategoryRefKey>category_5</ChapterCategoryRefKey>
+      </ChildChapter>
+</Chapter>
+</ChapterList>
+  <CategoryList>      <Category categoryId="category_1" appropriate="true">
+          <CategoryName>cat1</CategoryName>      <KnowhowRefKey>knowhow_2</KnowhowRefKey>
+      <KnowhowRefKey>knowhow_1</KnowhowRefKey>
+
+      </Category>
+      <Category categoryId="category_2" appropriate="true">
+          <CategoryName>cat2</CategoryName>      <KnowhowRefKey>knowhow_3</KnowhowRefKey>
+
+      </Category>
+      <Category categoryId="category_3" appropriate="true">
+          <CategoryName>cat3</CategoryName>      <KnowhowRefKey>knowhow_4</KnowhowRefKey>
+
+      </Category>
+      <Category categoryId="category_4" appropriate="true">
+          <CategoryName>cat5</CategoryName>
+      </Category>
+      <Category categoryId="category_5" appropriate="true">
+          <CategoryName>cat4</CategoryName>
+      </Category>
+</CategoryList>
+  <KnowhowList>      <KnowhowInfomation knowhowId="knowhow_1" knowhowDetailRefKey="knowhowDetail_1">
+          <KnowhowNo>1</KnowhowNo>
+          <KnowhowName>knowledge3</KnowhowName>
+            <CheckItem checkItemId="checkItem_1" searchRefKey="searchInfo_1" searchExistance="true">
+          <CheckItemNo>1</CheckItemNo>
+          <CheckItemName>item3</CheckItemName>
+          <SearchProcess>java source</SearchProcess>
+          <PortabilityFactor>Java バージョンアップによる変更</PortabilityFactor>
+          <PortabilityDegree>High</PortabilityDegree>
+          <DegreeDetail>高</DegreeDetail>
+          <VisualConfirm>check</VisualConfirm>
+          <HearingConfirm>check</HearingConfirm>
+      </CheckItem>
+</KnowhowInfomation>
+      <KnowhowInfomation knowhowId="knowhow_2" knowhowDetailRefKey="knowhowDetail_2">
+          <KnowhowNo>1</KnowhowNo>
+          <KnowhowName>knowledge2</KnowhowName>
+      </KnowhowInfomation>
+      <KnowhowInfomation knowhowId="knowhow_3" knowhowDetailRefKey="knowhowDetail_3">
+          <KnowhowNo>1</KnowhowNo>
+          <KnowhowName>knowledge1</KnowhowName>
+            <CheckItem checkItemId="checkItem_2" searchRefKey="searchInfo_2" searchExistance="false">
+          <CheckItemNo>1</CheckItemNo>
+          <CheckItemName>item1</CheckItemName>
+          <SearchProcess>java source</SearchProcess>
+          <PortabilityFactor>Java バージョンアップによる変更</PortabilityFactor>
+          <PortabilityDegree>High</PortabilityDegree>
+          <DegreeDetail>高</DegreeDetail>
+          <VisualConfirm>check</VisualConfirm>
+          <HearingConfirm>check</HearingConfirm>
+      </CheckItem>
+      <CheckItem checkItemId="checkItem_3" searchRefKey="searchInfo_3" searchExistance="true">
+          <CheckItemNo>2</CheckItemNo>
+          <CheckItemName>item2</CheckItemName>
+          <SearchProcess>java source</SearchProcess>
+          <PortabilityFactor>Java バージョンアップによる変更</PortabilityFactor>
+          <PortabilityDegree>High</PortabilityDegree>
+          <DegreeDetail>高</DegreeDetail>
+          <VisualConfirm>check</VisualConfirm>
+          <HearingConfirm>check</HearingConfirm>
+      </CheckItem>
+</KnowhowInfomation>
+      <KnowhowInfomation knowhowId="knowhow_4" knowhowDetailRefKey="knowhowDetail_4">
+          <KnowhowNo>1</KnowhowNo>
+          <KnowhowName>knowledge4</KnowhowName>
+      </KnowhowInfomation>
+</KnowhowList>
+  <DocBookList>      <DocBook articleId="knowhowDetail_1">
+          <ns3:article>
+              <ns3:info>
+                  <ns3:title>knowledge3</ns3:title>
+              </ns3:info>
+              <ns3:section><ns3:para>detail</ns3:para></ns3:section>
+          </ns3:article>
+      </DocBook>
+      <DocBook articleId="knowhowDetail_2">
+          <ns3:article>
+              <ns3:info>
+                  <ns3:title>knowledge2</ns3:title>
+              </ns3:info>
+              <ns3:section><ns2:para>detail</ns2:para></ns3:section>
+          </ns3:article>
+      </DocBook>
+      <DocBook articleId="knowhowDetail_3">
+          <ns3:article>
+              <ns3:info>
+                  <ns3:title>knowledge1</ns3:title>
+              </ns3:info>
+              <ns3:section><ns2:para>detail</ns2:para></ns3:section>
+          </ns3:article>
+      </DocBook>
+      <DocBook articleId="knowhowDetail_4">
+          <ns3:article>
+              <ns3:info>
+                  <ns3:title>knowledge4</ns3:title>
+              </ns3:info>
+              <ns3:section><ns2:para>detail</ns2:para></ns3:section>
+          </ns3:article>
+      </DocBook>
+</DocBookList>
+  <SearchInfomationList>      <SearchInfomation searchInfoId="searchInfo_1">
+          <FileType>*</FileType>
+          <SearchKey1>\*</SearchKey1>
+          <SearchKey2/>
+          <PythonModule/>
+          <LineNumberInfomation>
+              <LineNumber>1</LineNumber>
+              <LineNumberContents/>
+              <Investigation/>
+          </LineNumberInfomation>
+          <Appropriate lineNumberAppropriate="false">
+              <AppropriateContents>不明</AppropriateContents>
+          </Appropriate>
+      </SearchInfomation>
+      <SearchInfomation searchInfoId="searchInfo_2">
+          <FileType>*.java</FileType>
+          <SearchKey1>java\.lang\.SecurityManager</SearchKey1>
+          <SearchKey2>checkTopLevelWindow</SearchKey2>
+          <PythonModule/>
+          <LineNumberInfomation>
+              <LineNumber>1</LineNumber>
+              <LineNumberContents/>
+              <Investigation/>
+          </LineNumberInfomation>
+          <Appropriate lineNumberAppropriate="true">
+              <AppropriateContents/>
+          </Appropriate>
+      </SearchInfomation>
+      <SearchInfomation searchInfoId="searchInfo_3">
+          <FileType>*</FileType>
+          <SearchKey1>\*</SearchKey1>
+          <SearchKey2/>
+          <PythonModule>ext_search_xml_xpath.py</PythonModule>
+          <LineNumberInfomation>
+              <LineNumber>TODO:SE 手動算出</LineNumber>
+              <LineNumberContents>頑張る</LineNumberContents>
+              <Investigation>べたサーチ</Investigation>
+          </LineNumberInfomation>
+          <Appropriate lineNumberAppropriate="true">
+              <AppropriateContents/>
+          </Appropriate>
+      </SearchInfomation>
+</SearchInfomationList>
+</PortabilityKnowhow>

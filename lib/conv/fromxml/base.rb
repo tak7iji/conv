@@ -7,26 +7,9 @@ require 'cgi'
 require 'xlsx_writer'
 require 'conv/headers'
 
-module Conv
-  module FromXml
-    class Base
-    include Conv::Headers
-
+module Conv::FromXml
+  class Base
     class Output
-      def initialize argv
-        FileUtils.mkdir argv[:o] if ! argv[:o].nil? && ! File.exists?(argv[:o])
-        @output_file = "#{argv[:o]+'/' if ! argv[:o].nil? && Dir.exists?(argv[:o])}#{File.basename(argv[:f], '.xml')}.#{argv[:x]?'xlsx':'csv'}"
-
-        case argv[:x]
-        when true
-          @doc = XlsxWriter.new
-          @sheet = @doc.add_sheet("Data").tap{|s| s.add_row FromXml::Base::HEADERS }
-          @out = self
-        else
-          @out = CSV.open(@output_file, "wb", :headers => FromXml::Base::HEADERS, :write_headers => true, :encoding => 'Shift_JIS')
-        end
-      end
-    
       def get_output
         yield @out
         @out.close
@@ -41,7 +24,7 @@ module Conv
         @doc.cleanup
       end
     end
-
+  
     def initialize argv
       @argv = argv
     end
@@ -115,7 +98,6 @@ module Conv
         file.tap{|s| s.xpath("//xmlns:EntryCategoryRefKey").each {|node| getEntryCategory out, s, node}}
         out << ["@@" + file.xpath("//xmlns:PortabilityKnowhowTitle").text]
       end
-    end
     end
   end
 end
