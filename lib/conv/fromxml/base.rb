@@ -20,10 +20,10 @@ module Conv
         case argv[:x]
         when true
           @doc = XlsxWriter.new
-          @sheet = @doc.add_sheet("Data").tap{|s| s.add_row FromXml::HEADERS }
+          @sheet = @doc.add_sheet("Data").tap{|s| s.add_row FromXml::Base::HEADERS }
           @out = self
         else
-          @out = CSV.open(@output_file, "wb", :headers => FromXml::HEADERS, :write_headers => true, :encoding => 'Shift_JIS')
+          @out = CSV.open(@output_file, "wb", :headers => FromXml::Base::HEADERS, :write_headers => true, :encoding => 'Shift_JIS')
         end
       end
     
