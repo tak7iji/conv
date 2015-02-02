@@ -202,9 +202,18 @@ module Conv
       item_id=0
       chapter_id=0
       cat_list = Array.new
+      portability_knowhow_title = nil
 
       proc = lambda do |line|
-        next if line[NO] == NO
+
+        metadata = false
+        chapter_no = line[NO]
+        if chapter_no[0, 2] == "@@" then
+          portability_knowhow_title = chapter_no[2..-1]
+          metadata = true
+        end
+
+        next if chapter_no == NO || metadata
   
         cat_name = line[CATEGORY_NAME]
         parent_cat_name = line[PARENT_CATEGORY_NAME]
@@ -240,7 +249,7 @@ module Conv
       # XMLビルダー
       builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
         xml.PortabilityKnowhow('xmlns' => 'http://generated.model.biz.knowhow.tubame/knowhow', 'xmlns:ns2' => 'http://www.w3.org/1999/xlink', 'xmlns:ns3' => 'http://docbook.org/ns/docbook') {
-          xml.PortabilityKnowhowTitle @base_name
+          xml.PortabilityKnowhowTitle
           xml.EntryViewList
           xml.ChapterList
           xml.CategoryList
@@ -277,6 +286,9 @@ module Conv
   
       # ChildChapter登録（その２）
       registChildChapter @root.xpath('//xmlns:EntryViewList/xmlns:EntryCategory/xmlns:ChildEntry')
+
+      # PortabilityKnowhowTitle設定
+      @root.xpath("//xmlns:PortabilityKnowhowTitle")[0].content = portability_knowhow_title
   
       # XML出力
       FileUtils.mkdir @argv[:o] if ! @argv[:o].nil? && ! File.exists?(@argv[:o])
