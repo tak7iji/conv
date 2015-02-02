@@ -6,25 +6,10 @@ require 'csv'
 require 'cgi'
 require 'xlsx_writer'
 require 'conv/headers'
+require 'conv/output'
 
 module Conv::FromXml
   class Base
-    class Output
-      def get_output
-        yield @out
-        @out.close
-      end
-  
-      def << row
-        @sheet.add_row row
-      end
-  
-      def close
-        FileUtils::mv @doc.path, "#{@output_file}"
-        @doc.cleanup
-      end
-    end
-  
     def initialize argv
       @argv = argv
     end
@@ -93,7 +78,7 @@ module Conv::FromXml
     end
 
     def process
-      Output.new(@argv).get_output do |out|
+      Conv::Output.createOutput(@argv).get_output do |out|
         file = Nokogiri::XML(open(@argv[:f]))
         file.tap{|s| s.xpath("//xmlns:EntryCategoryRefKey").each {|node| getEntryCategory out, s, node}}
         out << ["@@" + file.xpath("//xmlns:PortabilityKnowhowTitle").text]

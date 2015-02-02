@@ -23,7 +23,7 @@ module Conv
       when ".xml"
         out = opts[:x] ? 'XLSX' : 'CSV'
         puts "Convert #{opts[:f]} to #{out}."
-        FromXml.process(opts)
+        FromXml::Base.new(opts).process
         out
       when ".csv", ".xlsx"
         puts "Convert #{opts[:f]} to TUBAME Knowledge XML."
