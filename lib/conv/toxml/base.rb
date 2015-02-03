@@ -211,7 +211,7 @@ module Conv::ToXml
           metadata = true
         end
 
-        next if chapter_no == NO || metadata
+        next if chapter_no == Conv::NO || metadata
   
         cat_name = line[Conv::CATEGORY_NAME]
         parent_cat_name = line[Conv::PARENT_CATEGORY_NAME]
@@ -258,8 +258,7 @@ module Conv::ToXml
       end
       @root = builder.doc
 
-      case @ext_name
-      internal_process &proc
+      internal_process proc
   
       cat_list.uniq!
   
