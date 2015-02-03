@@ -6,10 +6,8 @@ require 'cgi'
 require 'roo'
 require 'conv/headers'
 
-module Conv
-  module ToXml
-    class Base
-
+module Conv::ToXml
+  class Base
     def initialize argv
       @argv = argv
       @ext_name = File.extname(argv[:f])
@@ -261,15 +259,7 @@ module Conv
       @root = builder.doc
 
       case @ext_name
-      when ".csv"
-        CSV.foreach(@argv[:f], {:encoding => 'Shift_JIS:UTF-8', :headers => Conv::HEADERS, :return_headers => false}, &proc)
-      when ".xlsx"
-        # 第二引数にシート名が指定されている場合は、そのシートから読み込む
-        Roo::Excelx.new(@argv[:f]).tap{|s| s.default_sheet=@argv[:s] if !@argv[:s].nil?}.each({:headers => true}, &proc)
-      else
-        puts "#{@ext_name} is not supported file format."
-        exit
-      end
+      internal_process &proc
   
       cat_list.uniq!
   
@@ -295,7 +285,6 @@ module Conv
       output_file = "#{@argv[:o]+'/' if ! @argv[:o].nil? && Dir.exists?(@argv[:o])}#{@base_name}.xml"
 
       File.open(output_file, "w") {|file| file.write(@root.to_xml) }
-    end
     end
   end
 end

@@ -24,11 +24,11 @@ module Conv
       when ".xml"
         out = opts[:x] ? 'XLSX' : 'CSV'
         puts "Convert #{opts[:f]} to #{out}."
-        FromXml::Base.new(opts).process
+        Conv::FromXml::Base.new(opts).process
         out
       when ".csv", ".xlsx"
         puts "Convert #{opts[:f]} to TUBAME Knowledge XML."
-        ToXml::Base.new(opts).process
+        Conv::ToXml.process(opts)
         "XML"
       else
         puts opt.help if !opt.nil?
