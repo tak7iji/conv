@@ -24,5 +24,5 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "activesupport", "4.1.1"
   spec.add_runtime_dependency "xlsx_writer", "0.4.2"
   spec.add_runtime_dependency "roo", "1.13.2"
-  spec.add_runtime_dependency "nokogiri", "1.6.1"
+  spec.add_runtime_dependency "nokogiri", "1.10.8"
 end
